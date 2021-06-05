@@ -1,0 +1,112 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+const productOptions = [
+    'banana', 'phones', 'spacex'
+  ];
+
+class ExceptionBoundaries extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {hasError:''}
+    }
+
+    static getDerivedStateFromError(error){
+        return {hasError:true}
+    }
+
+    componentDidCatch(error, errorInfo){
+        console.log('error', error);
+        console.log('errorInfo', errorInfo)
+    }
+    render(){
+        if(this.state.hasError){
+            return(<div>
+                <b>Error in rendering your component!</b>
+            </div>);
+        }else {
+            return this.props.children;
+        }
+    }
+}
+class App extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            product:'',
+            quantity:'',
+            address:''
+        }
+    }
+    updateProductCallBack=e=>{
+        this.setState({product:e})
+    }
+    updateQuantityCallback=e=>{
+        this.setState({quantity:e})
+    }
+    updateAddressCallback=e=>{
+        this.setState({address:e})
+    }
+    render(){
+        return <div>
+            
+                <Product product={this.state.product} onProductChange={this.updateProductCallBack}></Product>
+                <Quantity quantity={this.state.quantity} onQuantityChange={this.updateQuantityCallback}></Quantity>
+            <ExceptionBoundaries>
+                <Summary 
+                    product={this.state.product} onProductChange={this.updateProductCallBack}
+                    quantity={this.state.quantity} onQuantityChange={this.updateQuantityCallback}></Summary>
+            </ExceptionBoundaries>
+        </div>
+    }
+}
+
+class Product extends React.Component{
+    changeHandler=e=>{
+        this.props.onProductChange(e.value)
+    }
+    render(){
+        //throw new Error("unable to render product!")
+        return <div style={{width:'200px'}}>
+                <label>Product</label>
+                <Dropdown options={productOptions} onChange={this.changeHandler} value={this.props.product} placeholder="Select Product"></Dropdown>
+        </div>
+    }
+}
+
+class Quantity extends React.Component{
+    changeHandler=e=>{
+        this.props.onQuantityChange(e.target.value);
+    }
+    render(){
+        return <div style={{width:'200px'}}>
+                <label>Quantity</label>
+                <input type="text" onChange={this.changeHandler} value={this.props.quantity}></input>
+        </div>
+    }
+}
+
+class Summary extends React.Component{
+    changeHandler=e=>{
+        this.props.onProductChange(e.value)
+    }
+    changeHandlerQty=e=>{
+        this.props.onQuantityChange(e.target.value)
+    }
+    render(){
+        return <div style={{width:'200px'}}>
+            <br/><br/>
+            <h2><u>Order Summary</u></h2>
+                <label>Product Selected</label>
+                <div>
+                <Dropdown options={productOptions} onChange={this.changeHandler} value={this.props.product} placeholder="Select Product"></Dropdown>
+                </div>
+                <label>Total Quantity</label>
+                <input type="text"  onChange={this.changeHandlerQty} value={this.props.quantity}></input>
+        </div>
+    }
+}
+
+const element = <App/>
+ReactDOM.render(element, document.getElementById("root"))

@@ -1,0 +1,64 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {useFormik} from 'formik'
+import * as yup from 'yup'
+
+const EmployeeComponent=()=>{
+    const formik = useFormik({
+        initialValues:{
+            Id:'',
+            Name:'',
+            Location:'',
+            Salary:'',
+            EmailId:''
+        },
+        validationSchema:yup.object({
+            Name:yup.string()
+            .max(20,"max 20 characters allowed!")
+            .required("Name required!"),
+            Location:yup.string()
+            .required("Location required!"),
+            EmailId:yup.string()
+            .required("Email required!")
+            .email("Invalid Email!")
+        }),
+        onSubmit:values=>{
+            const vjson = JSON.stringify(values)
+            console.log(vjson)
+        }
+    });
+    return (
+    <div>
+        <form onSubmit={formik.handleSubmit}>
+            <p>
+                <label htmlFor="Id">Employee Id</label>
+                    <input name="Id" {...formik.getFieldProps("Id")}></input> 
+            </p>
+            <p>
+                <label htmlFor="Name">Employee Name</label> 
+                    <input name="Name" {...formik.getFieldProps("Name")}></input>
+                    {formik.touched.Name && formik.errors.Name ? <span style={{color:'red'}}>{formik.errors.Name}</span> : null}
+            </p>
+            <p>
+                <label htmlFor="Location">Employee Location</label>
+                    <input name="Location" {...formik.getFieldProps("Location")}></input>
+                    {formik.touched.Location && formik.errors.Location ? <span style={{color:'red'}}>{formik.errors.Location}</span> : null}
+            </p>
+            <p>
+                <label htmlFor="Salary">Employee Salary</label>
+                    <input name="Salary" {...formik.getFieldProps("Salary")}></input>
+            </p>
+            <p>
+                <label htmlFor="EmailId">Employee Email</label>
+                    <input name="EmailId" {...formik.getFieldProps("EmailId")}></input>
+                    {formik.touched.EmailId && formik.errors.EmailId ? <span style={{color:'red'}}>{formik.errors.EmailId}</span> : null}
+            </p>
+            <p>
+                <button type="submit">Create</button>
+            </p>            
+        </form>
+    </div>)
+}
+
+const element = <EmployeeComponent></EmployeeComponent>
+ReactDOM.render(element, document.getElementById("root"))

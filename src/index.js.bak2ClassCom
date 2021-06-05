@@ -1,0 +1,41 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Employee extends React.Component{
+    render(){
+        return <div>
+            <p>
+                <label> Employee ID <b> {this.props.Id}</b></label> 
+            </p>
+            <p>
+                <label> Employee Name <b> {this.props.Name}</b></label> 
+            </p>
+            <p>
+                <label> Location<b> {this.props.Location}</b></label> 
+            </p>
+            <p>
+                <label> Salary<b> {this.props.Salary}</b></label> 
+            </p>
+            <p>
+                <Department DeptName={this.props.DName} DeptLoc={this.props.DLoc}></Department>
+            </p>
+        </div>
+    }
+}
+
+class Department extends React.Component{
+    render(){
+        return <div>
+            <p>
+                <label>Department Name <b>{this.props.DeptName}</b></label>
+            </p>
+            <p>
+                <label>Department Location <b>{this.props.DeptLoc}</b></label>
+            </p>
+        </div>
+    }
+}
+
+const element = <Employee Id="EMP101" Name="james harry" Location="New Jersey" Salary="30000" DName="Sales" DLoc="Palo Alto CA"></Employee>
+
+ReactDOM.render(element, document.getElementById("root"))

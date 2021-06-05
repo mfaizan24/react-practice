@@ -1,0 +1,27 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Login extends React.Component{
+    constructor(props){
+        super(props);
+        this.usernameRef=React.createRef();
+        this.pwdRef=React.createRef();
+    }
+    componentDidMount(){this.usernameRef.current.focus();}
+    render(){
+        return <div>
+            <p>
+                User Name
+                <input type="text" ref={this.usernameRef}></input>
+            </p>
+            <p>
+                password
+                <input type="text" ref={this.pwdRef}></input>
+            </p>
+            <p>
+                <button>Login</button>
+            </p>
+        </div>
+    }
+}
+ReactDOM.render(<Login/>,document.getElementById("root"))

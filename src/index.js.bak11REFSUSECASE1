@@ -1,0 +1,33 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class App extends React.Component {
+    render(){
+        return <div>
+            <Quantity/>
+        </div>
+    }
+}
+class Quantity extends React.Component{
+    constructor(props){
+        super(props);
+        this.incrementRef = React.createRef();
+    }
+    incrementQty=e=>{this.incrementRef.current.value++;}
+    decrementQty=e=>{this.incrementRef.current.value--;}
+    render(){
+        alert('test')
+        return <div>
+            <p>
+                Enter Quantity
+            </p>
+            <p>
+                <button onClick={this.decrementQty}>-</button>
+                <input type="text" ref={this.incrementRef} defaultValue="0" style={{width:'30px',textAlign:'center'}} />
+                <button onClick={this.incrementQty}>+</button>
+            </p>
+        </div>
+    }
+}
+
+ReactDOM.render(<App/>,document.getElementById("root"))

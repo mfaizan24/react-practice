@@ -1,0 +1,39 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+const App =()=>{
+    return (
+        <div>
+            <Products></Products>
+        </div>
+    )
+}
+
+class Products extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            data:[]
+        }
+    }
+    componentDidMount(){
+        fetch("https://fakestoreapi.com/products").then(p=>p.json()).then(r=>{
+            this.setState({data:r})
+        })
+    }
+    render(){
+        return <div>
+            {this.state.data.map(d=>{
+                return <div key={d.id}>
+                        <p><b>{d.category}</b></p>
+                        <img style={{height:'80px', width:'100px'}} src={d.image}></img>
+                        <p>{d.title} (${d.price})</p>
+                        <p style={{width:'300px'}}>{d.description}</p>
+                    </div>
+            })}
+        </div>
+    }
+}
+
+
+ReactDOM.render(<App/>,document.getElementById("root"))

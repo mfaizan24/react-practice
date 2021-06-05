@@ -1,0 +1,51 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+let toppings = [
+    { "id": "5001", "type": "None" },
+    { "id": "5002", "type": "Glazed" },
+    { "id": "5005", "type": "Sugar" },
+    { "id": "5007", "type": "Powdered Sugar" },
+    { "id": "5006", "type": "Chocolate with Sprinkles" },
+    { "id": "5003", "type": "Chocolate" },
+    { "id": "5004", "type": "Maple" }
+]
+
+let Topping =(props)=>{
+    return <div style={{border:"1px solid green"}}>
+        <p>
+            <label>Topping Id <b>{props.data.id}</b></label>
+        </p>
+        <p>
+            <label>Topping Type <b>{props.data.type}</b></label>
+        </p>
+    </div>
+}
+
+let DisplayTopping =(props)=>{
+    const _list1 = props.toppingList;
+    const _list2 = _list1.map((topping)=>{
+        return <Topping key={topping.id} data={topping}></Topping>
+    })
+    return (
+        <div>
+            {_list2}
+        </div>
+    )
+}
+
+class App extends React.Component{
+    render(){
+        return <div>
+            <DisplayTopping toppingList={toppings}></DisplayTopping>
+        </div>
+    }
+}
+
+//there are two ways we can display the output on the UI
+//way 1
+//const element = <DisplayTopping toppingList={toppings}></DisplayTopping>
+//way 2
+const element = <App/>
+
+ReactDOM.render(element, document.getElementById("root"));

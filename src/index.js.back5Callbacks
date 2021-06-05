@@ -1,0 +1,68 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Employee extends React.Component{
+    constructor(){
+        super()
+        this.state = {
+            updatedSalary:null
+        }
+    }
+    getUpdatedSalaryCallback=(salary)=>{
+        this.setState({updatedSalary: salary})
+    }
+    render(){
+        return <div>
+            <p>
+                <label>Name <b>{this.props.EName}</b></label>
+            </p>
+            <p>
+                <label>Basic Salary <b>{this.props.ESalary}</b></label>
+            </p>
+            <p>
+                <label> Updated Salary <b>{this.state.updatedSalary}</b></label>
+            </p>
+            
+            <Salary basicSalary={this.props.ESalary} 
+                    HRA={this.props.hra} DA={this.props.da} onSalaryChanged={this.getUpdatedSalaryCallback}></Salary>
+        </div>
+    }
+}
+
+class Salary extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            basicSal: this.props.basicSalary,
+            hra: this.props.HRA,
+            da: this.props.DA
+        }
+    }
+    updateSalary =() =>{
+     //get the values from refs
+     //we will talk more about refs in future   
+     let hra = parseInt(this.refs.numHra.value);
+     let da = parseInt(this.refs.numDa.value);
+     let basic = parseInt(this.state.basicSal)//taking basic from the props setted state
+     let totalSalary = hra+da+basic;
+     this.props.onSalaryChanged(totalSalary);
+    }
+    render(){
+        return <div>
+            <h2>Salary Breakup..</h2>
+            <p>
+                <label>HRA <input type="number" ref="numHra" defaultValue={this.state.hra}></input></label>
+            </p>
+            <p>
+                <label>DA <input type="number" ref="numDa" defaultValue={this.state.da}></input></label>
+            </p>
+            <p>
+                <button onClick={this.updateSalary}>Update Salary</button>
+            </p>
+        </div>
+    }
+}
+
+const element = <Employee EName="James" ESalary="50000" hra="500" da="200"></Employee>
+
+ReactDOM.render(element, document.getElementById("root"))

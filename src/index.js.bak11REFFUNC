@@ -1,0 +1,17 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+const FuncComponent =()=>{
+    let txtFocus = null;
+    function getFocus(){
+        txtFocus.focus();
+    }
+    return(
+        <div>
+            <input type="text" ref={e=>txtFocus=e}></input>
+            <button onClick={getFocus}>Click To get focus</button>
+        </div>
+    )
+}
+
+ReactDOM.render(<FuncComponent/>,document.getElementById("root"))

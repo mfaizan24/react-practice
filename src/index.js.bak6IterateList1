@@ -1,0 +1,50 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+const employees = [
+    {Id:101, Name:"james", Location:"Bangalore", Salary:20000},
+    {Id:102, Name:"william", Location:"Hyderbaad", Salary:30000},
+    {Id:103, Name:"sam", Location:"Nagpur", Salary:40000},
+    {Id:104, Name:"khalid", Location:"Delhi", Salary:50000}
+]
+
+class App extends React.Component{
+    render(){
+        return <div>
+            <h2>This is App</h2>
+            <DisplayEmployeeInfo employeeList={employees} ></DisplayEmployeeInfo>
+        </div>
+    }
+}
+
+var Employee=(props)=>{
+    return <div style={{border:"3px solid blue"}}>
+        <p>
+            <label>Employee Id: {props.data.Id}</label>
+        </p>
+        <p>
+            <label>Employee Name: {props.data.Name}</label>
+        </p>
+        <p>
+            <label>Employee Location: {props.data.Location}</label>
+        </p>
+        <p>
+            <label>Employee Salary: {props.data.Salary}</label>
+        </p>
+    </div>
+}
+
+var DisplayEmployeeInfo=(props)=>{
+    const empList = props.employeeList;
+    const listElements = empList.map((emp) => {
+        return <Employee key={emp.Id} data={emp}></Employee>
+    })
+    return (
+        <div>
+            {listElements}
+        </div>
+    )
+}
+
+const element = <App/>
+ReactDOM.render(element, document.getElementById("root"))

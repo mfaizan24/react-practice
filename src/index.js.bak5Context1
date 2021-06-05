@@ -1,0 +1,65 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+const employeeContext = React.createContext();
+
+class App extends React.Component {
+    constructor(){
+        super();
+        this.state={
+            EmployeeId: 101, 
+            Name: "james",
+            Age: 33, 
+            Dept:"HR"
+        }
+    }
+    changeEmployeeData=()=>{
+        this.setState({EmployeeId:1000000})
+    }
+    render(){
+        return <div>
+            <h2>this is app component</h2>
+            <p>
+                <label>Employee Id: <b>{this.state.EmployeeId}</b></label>
+            </p>
+            <p>
+                <button onClick={this.changeEmployeeData}>Update Employee</button>
+            </p>
+
+
+            <employeeContext.Provider value={this.state}>
+                <Employee></Employee>
+            </employeeContext.Provider>
+        </div>
+    }
+}
+
+class Employee extends React.Component {
+    static contextType = employeeContext;
+    render(){
+        return <div>
+            <h2>this is employee</h2>
+            <p>
+                <label>Employee Id: <b>{this.context.EmployeeId}</b></label>
+            </p>
+            <Salary/>
+        </div>
+    }
+}
+
+class Salary extends React.Component{
+    static contextType = employeeContext;
+    render(){
+        return <div>
+            <h2>this is salary</h2>
+            <p>
+                <label>Employee Id: <b>{this.context.EmployeeId}</b></label>
+            </p>
+        </div>
+    }
+}
+
+const element = <App></App>
+ReactDOM.render(element, document.getElementById("root"))
+
+

@@ -1,0 +1,59 @@
+import { render } from '@testing-library/react'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Employee extends React.Component {
+    state = {counter:0};
+    render(){
+        return <div>
+            <h2>Add Employee details</h2>
+            <p>
+                <button onClick={this.addEmployee}>Add Employee</button>
+            </p>
+            <p>
+                Total employee added {this.state.counter}
+            </p>
+            <p>
+                <CountCharacter/>
+            </p>
+        </div>
+    }
+    addEmployee =() =>{
+        this.setState({counter:this.state.counter+1});
+    }
+}
+
+class CountCharacter extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            message:'',
+            counter:10
+        };
+    }
+    onMessageChange = (text) =>{
+        this.setState({
+            message:'this text got length ' + text.length,
+            counter: this.state.counter + 10
+        })
+    }
+    render(){
+        return <div>
+            <p>
+                Enter words to count characters
+            </p>
+            <p>
+                <label>Message</label><input type="text" onChange={e => this.onMessageChange(e.target.value)}></input>
+            </p>
+            <p>
+                <label>{this.state.message}</label>
+            </p>
+            <p>
+                <label>this exists in state..{this.state.counter}</label>
+            </p>
+        </div>
+    }
+}
+
+const element = <Employee></Employee>
+ReactDOM.render(element, document.getElementById("root"))

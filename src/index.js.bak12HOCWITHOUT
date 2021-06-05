@@ -1,0 +1,102 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Product extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data:[]
+        }
+    }
+    componentDidMount(){
+        document.getElementById("loadingDiv").style.display = 'block';
+        fetch("https://fakestoreapi.com/products").then(p=>p.json()).then(r=>{
+            document.getElementById("loadingDiv").style.display = 'none';
+            this.setState({data:r})
+        });
+    }
+    render(){
+        return <div>
+            <div id="loadingDiv">
+                <h2>Loading...</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.data.map(d=>{
+                        return <tr key={d.id}>
+                            <td>{d.title}</td>
+                            <td>{d.category}</td>
+                            <td>{d.price}</td>
+                            <td>{d.description}</td>
+                        </tr>
+                    })}
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+class Jewelery extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data:[]
+        }
+    }
+    componentDidMount(){
+        document.getElementById("loadingDiv").style.display = 'block';
+        fetch("https://fakestoreapi.com/products/category/jewelery").then(p=>p.json()).then(r=>{
+            document.getElementById("loadingDiv").style.display = 'none';
+            this.setState({data:r})
+        })
+    }
+    render(){
+        return <div>
+            <div id="loadingDiv">
+                <h2>Loading...</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.data.map(d=>{
+                            return <tr key={d.id}>
+                                <td>{d.title}</td>
+                                <td>{d.category}</td>
+                                <td>{d.price}</td>
+                                <td>{d.description}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+class AdminDashboard extends React.Component{
+    render(){
+        return <React.Fragment>
+            <Product/>
+            <Jewelery/>
+        </React.Fragment>
+    }
+}
+
+
+
+ReactDOM.render(<AdminDashboard/>,document.getElementById("root"))

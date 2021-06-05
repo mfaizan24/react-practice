@@ -1,0 +1,23 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import video from '../src/media/Riders on the storm - helicopter.mp4'
+class PlayVideo extends React.Component{
+    constructor(props){
+        super(props);
+        this.videoRef = React.createRef();
+    }
+    playVideo=e=>{this.videoRef.current.play();}
+    pauseVideo=e=>{this.videoRef.current.pause();}
+    render(){
+        return <div>
+            <video ref={this.videoRef} height="200px" width="300px" controls>
+                <source src={video} type="video/mp4"></source>
+            </video>
+            <div>
+                <button onClick={this.playVideo}>Play</button>
+                <button onClick={this.pauseVideo}>Pause</button>
+            </div>
+        </div>
+    }
+}
+ReactDOM.render(<PlayVideo/>,document.getElementById("root"))

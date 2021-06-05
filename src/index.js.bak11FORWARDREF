@@ -1,0 +1,67 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Product extends React.Component{
+    constructor(props){
+        super(props);
+        this.brandRef = React.createRef();
+        this.typeRef = React.createRef();
+    }
+    render(){
+        console.log('render Product')
+        return <div>
+            <p>
+                <label>Brand</label>
+                <input type="text" ref={this.brandRef}></input>
+            </p>
+            <p>
+                <label>Type</label>
+                <input type="text" ref={this.typeRef}></input>
+            </p>
+            <ProductSelection innerBrandRef={this.brandRef} innerTypeRef={this.typeRef}></ProductSelection>
+        </div>
+    }
+}
+
+class ProductSelection extends React.Component{
+    brandclick = false;
+    typeclick = false;
+    constructor(props){
+        super(props);
+    }
+    handleChangeBrand=e=>{
+        this.brandclick = true;
+        this.typeclick = false;
+        if(this.brandclick && !this.typeclick){
+            document.getElementById("trBrand").bgColor = "green"
+            document.getElementById("trType").bgColor = "white"
+        }
+            
+        this.props.innerBrandRef.current.focus();
+    }
+    handleChangeType=e=>{
+        this.brandclick = false;
+        this.typeclick = true;
+        if(!this.brandclick && this.typeclick){
+            document.getElementById("trBrand").bgColor = "white"
+            document.getElementById("trType").bgColor = "green"
+        }
+        this.props.innerTypeRef.current.focus();
+    }
+    render(){
+        console.log('render ProductSelection')
+        return <div>
+            <table>
+                <tbody>
+                    <tr onClick={this.handleChangeBrand} id="trBrand">
+                        <td>Brand</td><td>Farrari</td>
+                    </tr>
+                    <tr onClick={this.handleChangeType} id="trType">
+                        <td>Type</td><td>Engine</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+ReactDOM.render(<Product/>, document.getElementById("root"))

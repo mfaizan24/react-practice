@@ -1,0 +1,36 @@
+// import React from 'react'; 
+// import ReactDOM from 'react-dom';
+// import './main.css';
+
+// var DisplayEmployeeInfo = (employee) => {
+//     return <div>
+//         <p>
+//             <label>Id</label><b>{employee.id}</b>
+//         </p>
+//         <p>
+//             <label>Name</label><b>{employee.name}</b>
+//         </p>
+//         <p>
+//             <label>Age</label><b>{employee.age}</b>
+//         </p>
+//         <p>
+//             <DeptInfo id={employee.deptId}></DeptInfo>
+//         </p>
+
+//     </div>
+// }
+
+// var DeptInfo = (dept) =>{
+//     return <div>
+//         <p>Department name</p><b> {dept.id}</b>
+//     </div>
+
+// }
+
+// var elEmp = <DisplayEmployeeInfo id="123" name="james william" age="23" deptId="HR1011"></DisplayEmployeeInfo>
+
+// ReactDOM.render(elEmp, document.getElementById('root'));
+
+
+
+

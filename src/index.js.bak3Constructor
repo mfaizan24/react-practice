@@ -1,0 +1,21 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Employee extends React.Component{
+    constructor(props){
+        super(props);
+        console.log(this.props);
+    }
+    render(){
+        return <div>
+                <h1>Employee Details</h1>
+                <p>
+                    <label>Employee name <b> {this.props.name}</b></label>
+                </p>
+            </div>
+    }
+}
+
+var element = <Employee name="james william"></Employee>
+
+ReactDOM.render(element, document.getElementById("root"))

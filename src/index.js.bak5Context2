@@ -1,0 +1,74 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+const employeeContext = React.createContext({
+    data:'',
+    changeEmployeeInfo:(v)=>{}
+});
+
+class App extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            data:{
+                Id: 101
+            },
+            changeEmployeeInfo: this.updateEmployeeInfo
+        }
+    }
+    updateEmployeeInfo=(v)=>{
+        this.setState({data:{Id:v}})
+    }
+
+    render(){
+        return <div>
+            <h2>This is main App</h2>
+            <p>
+                <label>Employee Id: {this.state.data.Id}</label>
+            </p>
+            <employeeContext.Provider value={this.state}>
+                <Employee></Employee>
+            </employeeContext.Provider>
+        </div>
+    }
+}
+
+class Employee extends React.Component{
+    static contextType = employeeContext;
+    eUpdate =()=>{
+        this.context.changeEmployeeInfo(10002)
+    }
+    render(){
+        return <div>
+            <h2>Employee component</h2>
+            <p>
+                <label>Employee Id: {this.context.data.Id}</label>
+            </p>
+            <p>
+                <button onClick={this.eUpdate}>Update From Employee</button>
+            </p>
+            <Salary/>
+        </div>
+    }
+}
+
+class Salary extends React.Component {
+    static contextType = employeeContext;
+    sUpdate =()=>{
+        this.context.changeEmployeeInfo(100033)
+    }
+    render(){
+        return <div>
+            <h2>This is salary</h2>
+            <p>
+                <label>Employee Id: {this.context.data.Id}</label>
+            </p>
+            <p>
+                <button onClick={this.sUpdate}>Update From Salary</button>
+            </p>
+        </div>
+    }
+}
+
+const element = <App/>
+ReactDOM.render(element, document.getElementById("root"))

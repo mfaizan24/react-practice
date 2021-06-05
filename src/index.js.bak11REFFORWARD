@@ -1,0 +1,59 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Product extends React.Component{
+    constructor(props){
+        super(props);
+        this.brandRef = React.createRef();
+        this.typeRef=React.createRef();
+    }
+    render(){
+        return <div>
+              <p>
+                <label>Brand</label>
+                <input type="text" ref={this.brandRef}></input>
+            </p>
+            <p>
+                <label>Type</label>
+                <input type="text" ref={this.typeRef}></input>
+            </p>
+            <ProductSummary innerBrandRef={this.brandRef} innerTypeRef={this.typeRef}></ProductSummary>
+            <ForwardFuncComponentExample ref={this.brandRef}></ForwardFuncComponentExample>
+        </div>
+    }
+}
+
+class ProductSummary extends React.Component{
+    changeHandlerBrand=e=>{
+        this.props.innerBrandRef.current.focus();
+    }
+    changeHandlerType=e=>{
+        this.props.innerTypeRef.current.focus();
+    }
+    render(){
+        return <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Brand</td><td onClick={this.changeHandlerBrand}>Fararri</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td><td onClick={this.changeHandlerType}>Engine</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+const ForwardFuncComponentExample=React.forwardRef((props, ref)=>{
+    function getBrandFocus(){
+        ref.current.focus();
+    }
+    return(<div>
+        <button onClick={getBrandFocus}>Brand Focus</button>
+    </div>)
+});
+
+
+ReactDOM.render(<Product/>, document.getElementById("root"))

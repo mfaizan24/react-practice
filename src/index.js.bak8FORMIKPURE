@@ -1,0 +1,81 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {ErrorMessage, Field, Form, Formik} from 'formik'
+import * as yup from 'yup'
+
+const EmployeeComponent=()=>{
+    return (
+        <Formik 
+            initialValues={{
+                    Id:'',
+                    Name:'',
+                    Location:'',
+                    Salary:'',
+                    EmailId:'',
+                    Designation:''
+                }} 
+            validationSchema={yup.object({
+                    Name:yup.string()
+                    .max(20,"max 20 characters allowed!")
+                    .required("Name required!"),
+                    Location:yup.string()
+                    .required("Location required!"),
+                    EmailId:yup.string()
+                    .required("Email required!")
+                    .email("Invalid Email!"),
+                    Designation:yup.string()
+                    .required("Select Designation")
+                })} 
+            onSubmit={values=>{
+                        const vjson = JSON.stringify(values)
+                        console.log(vjson)
+                    }}>
+            {props=>(
+                <div>
+                    <h2>New Employee Detail</h2>
+                    <Form>
+                        <p>
+                            <label>Employee Id</label>
+                            <Field type="text" name="Id"></Field>
+                        </p>
+                        <p>
+                            <label>Employee Name</label>
+                            <Field type="text" name="Name"></Field>
+                            <ErrorMessage name="Name"></ErrorMessage>
+                        </p>
+                        <p>
+                            <label>Employee Location</label>
+                            <Field type="text" name="Location"></Field>
+                            <ErrorMessage name="Location"></ErrorMessage>
+                        </p>
+                        <p>
+                            <label>Employee Salary</label>
+                            <Field type="text" name="Salary"></Field>
+                            <ErrorMessage name="Salary"></ErrorMessage>
+                        </p>
+                        <p>
+                            <label>Employee Email</label>
+                            <Field type="text" name="EmailId"></Field>
+                            <ErrorMessage name="EmailId"></ErrorMessage>
+                        </p>
+                        <p>
+                            <label>Designation</label>
+                            <Field as="select" name="Designation">
+                                <option value="">Select</option>
+                                <option value="SoftwareEngineer">Software Engineer</option>
+                                <option value="SrSoftwareEngineer">Sr Software Engineer</option>
+                                <option value="Lead">Lead</option>
+                            </Field>
+                            <ErrorMessage name="Designation"></ErrorMessage>
+                        </p>
+                        <button type="submit" disabled={!props.isValid}>Create Employee</button>
+                    </Form>
+                </div>
+            )}
+          
+        </Formik>
+    )
+}
+
+const element = <EmployeeComponent></EmployeeComponent>
+ReactDOM.render(element, document.getElementById("root"))

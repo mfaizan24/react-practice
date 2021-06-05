@@ -1,0 +1,79 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Orders extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            quantity:'',
+            address:''
+        }
+    }
+
+    onQuantityChangeCallback=q=>{
+        this.setState({quantity:q})
+    }
+    onAddressChangeCallback=a=>{
+        this.setState({address:a})
+    }
+
+    render(){
+        return <div>
+            <Address address={this.state.address} onAddressChange={this.onAddressChangeCallback}></Address>
+            <Quantity quantity={this.state.quantity} onQuantityChange={this.onQuantityChangeCallback}></Quantity>
+            <OrderSummary  quantity={this.state.quantity} address={this.state.address} onSummaryQuantityChange={this.onQuantityChangeCallback} onSummaryAddressChange={this.onAddressChangeCallback}></OrderSummary>
+        </div>
+    }
+}
+
+class Quantity extends React.Component{
+    changeHandler=e=>{
+        this.props.onQuantityChange(e.target.value)
+    }
+    render(){
+        return <div>
+            <p>
+                Quantity
+                <input type="text" value={this.props.quantity} onChange={this.changeHandler}></input>
+            </p>
+        </div>
+    }
+}
+
+class Address extends React.Component{    
+    changeHandler=e=>{
+        this.props.onAddressChange(e.target.value)
+    }
+    render(){
+        return <div>
+            <p>
+                <label>Address</label>
+                <textarea value={this.props.address} onChange={this.changeHandler}></textarea>
+            </p>
+        </div>
+    }
+}
+
+class OrderSummary extends React.Component{
+    changeHandlerQty=e=>{
+        this.props.onSummaryQuantityChange(e.target.value);
+    }
+    changeHandlerAddr=e=>{
+        this.props.onSummaryAddressChange(e.target.value);
+    }
+    render(){
+        return <div>
+            <p>
+                <label>Total Quantity</label>
+                <input type="text" value={this.props.quantity} onChange={this.changeHandlerQty}></input>
+            </p>
+            <p>
+                <label>Delivery Address</label>
+                <textarea value={this.props.address} onChange={this.changeHandlerAddr}></textarea>
+            </p>
+        </div>
+    }
+}
+
+const element = <Orders/>
+ReactDOM.render(element, document.getElementById("root"));

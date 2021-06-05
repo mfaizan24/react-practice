@@ -1,0 +1,57 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+//I was facing issues with refs as it is now legacy to use ref="refvariable", i found the solution here.
+//https://stackoverflow.com/questions/43137275/how-to-get-values-from-input-types-using-this-refs-in-reactjs
+class CreateUser extends React.Component{
+    constructor(){
+        super();
+        this.nameref = React.createRef();
+        this.jobref = React.createRef();
+    }
+    createJob =()=>{
+        let aJob = {
+            name: this.nameref.current.value,
+            job: this.jobref.current.value
+        }
+        console.log(aJob)
+        fetch("https://reqres.in/api/users",{
+            method:'POST',
+            headers:{'content-type':'application/json'},
+            body:JSON.stringify(aJob)
+        }).then(res=>{
+            console.log(res);
+        });
+    }
+    render(){
+        return <div>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        <input type="text" ref={this.nameref}></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Job
+                    </td>
+                    <td>
+                        <input type="text" ref={this.jobref}></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colSpan="2">
+                        <button onClick={this.createJob}>Create Job</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+const element = <CreateUser/>
+ReactDOM.render(element, document.getElementById("root"));
